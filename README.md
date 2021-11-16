@@ -60,3 +60,11 @@ Our model achieves the following performance on :
 | Model name         | Top 1 Accuracy  | Top 5 Accuracy |
 | ------------------ |---------------- | -------------- |
 | My best model      |     NA          |      NA        |
+
+
+## Resources:
+
+- [DynamicHead Github](https://github.com/microsoft/DynamicHead)
+- [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
+- [Microsoft Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
+- Contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with questions or concerns
