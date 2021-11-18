@@ -28,6 +28,22 @@ from torch.utils.tensorboard import SummaryWriter
 from src.models.swin_transformer import SwinTransformer
 from bottleneck_transformer_pytorch import BottleStack
 
+#
+import detectron2
+from detectron2.utils.logger import setup_logger
+setup_logger()
+
+# import some common libraries
+import numpy as np
+import cv2
+import random
+
+# import some common detectron2 utilities
+from detectron2 import model_zoo
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2.utils.visualizer import Visualizer
+from detectron2.data import MetadataCatalog
 
 def main(args):
     writer = create_writer(args)
@@ -76,42 +92,6 @@ def update_loss_hist(args, train_list, val_list, name="result"):
     plt.legend(["train", "val"], loc="center right")
     plt.savefig("{}/{}.png".format(args.output_foloder, name))
     plt.clf()
-
-
-def create_model_BotNet(args):
-    from torchvision.models import resnet50
-
-    layer = BottleStack(
-        dim=256,
-        fmap_size=56,  # set specifically for imagenet's 224 x 224
-        dim_out=2048,
-        proj_factor=4,
-        downsample=True,
-        heads=4,
-        dim_head=128,
-        rel_pos_emb=True,
-        activation=nn.ReLU(),
-    )
-
-    resnet = resnet50(pretrained=True)
-
-    # model surgery
-
-    backbone = list(resnet.children())
-
-    model = nn.Sequential(
-        *backbone[:5],
-        layer,
-        nn.AdaptiveAvgPool2d((1, 1)),
-        nn.Flatten(1),
-        nn.Linear(2048, 200),
-    )
-    # use the 'BotNet'
-
-    # img = torch.randn(2, 3, 224, 224)
-    # preds = model(img) # (2, 1000)
-    return model
-
 
 def create_model(args):
     import timm
