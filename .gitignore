@@ -133,3 +133,6 @@ dmypy.json
 model/
 
 output/
+
+*.pt
+answer.json
