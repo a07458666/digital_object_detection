@@ -1,6 +1,10 @@
-# Bird_classification
+#  SVHN Object Detection
 
 This repository is the implementation of CodaLab competitions [SVHN Object Detection](https://reurl.cc/Q6N0M2). 
+
+## Fork from yolov5
+
+https://github.com/ultralytics/yolov5
 
 ## Requirements
 
@@ -15,55 +19,47 @@ pip install -r requirements.txt
 To train the model(s), run this command:
 
 ```train
-python train.py --data_path <train_data_path> --classes_path <classes.txt> --training_labels_path <training_labels.txt> --batch_size 8 --lr 2e-4 --pretrain_model_path <pretrain_model_path> --output_foloder <model output path> --epochs 100
+python3 train_yolov5.py --data ./data/SVHN.yaml --batch 16 --epochs 50 --cfg models/yolov5x.yaml --name svhw_yolov5x_pre_320 --weights yolov5x.pt --imgsz 320
 ```
 
 * scheduler use `ReduceLROnPlateau`
-* optimizer  use `SGD`, momentum = 0.9, weight_decay = 1e-4
-* Data augmentation(RandomResizedCrop, RandomHorizontalFlip, ColorJitter, RandomRotation, GaussianBlur)
+* optimizer  use `SGD`, momentum = 0.937, weight_decay = 5e-4
+* Data augmentation(HSV-Hue augmentation, HSV-Saturation augmentation, HSV-Value augmentation, image translation, image scale)
 
-## Evaluation
+## Reproduceing Submission(Inference)
 
-To evaluate my model, run:
+[model link](https://drive.google.com/file/d/1ogQIq5IpsxPJ94RMBj0IC3HJumWlIAHr/view?usp=sharing)
 
-```eval
-python eval.py --data_path <eval_data_path> --classes_path <classes.txt> --training_labels_path <training_labels.txt> --model_path <model_path>
-```
+To Inference my model: [inference.ipynb](https://colab.research.google.com/github/a07458666/digital_object_detection/blob/master/inference.ipynb)
 
-## Reproduceing Submission
-
-[model link](https://drive.google.com/file/d/1FXQF4Pbpco3FkNbiQxSbN__ZSSd-ypsV/view?usp=sharing)
-
-```inference
-python inference.py --data_path <test_image_path> --classes_path <classes.txt> --test_filename_path <testing_img_order.txt> --model_path <model_path>
-```
->📋 Will output `answer.txt`
+>📋 Will output `answer.json`
 ## Pre-trained Models
 
 You can download pretrained models here:
 
-- [ImageNet-21K Pretraining for the Masses
-](https://github.com/Alibaba-MIIL/ImageNet21K) trained on ImageNet.
+[assets]: https://github.com/ultralytics/yolov5/releases
+[TTA]: https://github.com/ultralytics/yolov5/issues/303
 
-- Or use timm to load the model
+|Model |size<br><sup>(pixels) |mAP<sup>val<br>0.5:0.95 |mAP<sup>val<br>0.5 |Speed<br><sup>CPU b1<br>(ms) |Speed<br><sup>V100 b1<br>(ms) |Speed<br><sup>V100 b32<br>(ms) |params<br><sup>(M) |FLOPs<br><sup>@640 (B)
+|---                    |---  |---    |---    |---    |---    |---    |---    |---
+|[YOLOv5m][assets]      |640  |45.2   |63.9   |224    |8.2    |1.7    |21.2   |49.0
+|[YOLOv5x][assets]      |640  |50.7   |68.9   |766    |12.1   |4.8    |86.7   |205.7
 
-```
-model = timm.create_model('vit_base_patch16_224_miil_in21k', pretrained=True)
-```
 
 ## Results
 
-Our model achieves the following performance on :
+My model achieves the following performance on :
 
-### Image Classification
+### Object Detection
 
-| Model name         | Top 1 Accuracy  | Top 5 Accuracy |
-| ------------------ |---------------- | -------------- |
-| My best model      |     NA          |      NA        |
+| Model name         |       mAP       |
+| ------------------ |---------------- |
+| My best model      |     0.42334     |
 
 
 ## Resources:
 
+- [yolov5](https://github.com/ultralytics/yolov5)
 - [DynamicHead Github](https://github.com/microsoft/DynamicHead)
 - [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/)
 - [Microsoft Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
