@@ -2,6 +2,10 @@
 
 This repository is the implementation of CodaLab competitions [SVHN Object Detection](https://reurl.cc/Q6N0M2). 
 
+test label result
+![test_label](./img/test_label.jpg)
+
+
 ## Fork from yolov5
 
 https://github.com/ultralytics/yolov5
